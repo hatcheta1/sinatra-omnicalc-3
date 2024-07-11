@@ -1,5 +1,6 @@
 require "sinatra"
 require "sinatra/reloader"
+require "sinatra/cookies"
 require "http"
 
 get("/") do
@@ -31,5 +32,17 @@ post("/process_umbrella") do
 
   pirate_weather_url = "https://api.pirateweather.net/forecast#{ENV.fetch("PIRATE_WEATHER_KEY")}/#{@latitude.to_s}, #{@longitude.to_s}"
 
+  cookies["last_location"] = @user_location
+  cookies["last_lat"] = @latitude
+  cookies["last_long"] = @longitude
+
   erb(:umbrella_results)
+end
+
+get("single_ai_message") do
+  "single message"
+end
+
+get("ai_chat") do
+  "chat"
 end
